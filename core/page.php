@@ -1,5 +1,9 @@
 <?php 
 
+	/**
+	* Navigation for the site
+	*/
+	
 	function as_navigation($request, $html = '')
 	{
 		$managerid = isset( $_SESSION['loggedin_manager'] ) ? $_SESSION['loggedin_manager'] : "";
@@ -7,7 +11,6 @@
 		$navigation = array();
 		if ( $managerid ) {			
 			$navigation['farmers'] = array('label' => 'Farmers', 'url' => 'index.php?open=farmer_all');
-			//$navigation['payments'] = array('label' => 'payments', 'url' => 'index.php?open=payment_all');
 			$navigation['payments'] = array('label' => 'Payments', 'url' => 'index.php?open=payment_all');
 			$navigation['managers'] = array('label' => 'Managers', 'url' => 'index.php?open=manager_all');
 			$navigation['settings'] = array('label' => 'Settings', 'url' => 'index.php?open=settings');			

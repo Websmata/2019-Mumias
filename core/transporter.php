@@ -1,16 +1,60 @@
 <?php
 
+	/**
+	 * Class to handle transporter
+	 */
+
 	class transporter
-	{ 
+	{ 		
+		// Properties
+
+		/**
+		 * @var int The transporter ID from the database
+		 */
 		public $transporterid = null;
+
+		/**
+		 * @var string The fullname of the transporter
+		 */
 		public $fullname = null;
+
+		/**
+		 * @var string The mobile number of the transporter
+		 */
 		public $mobile = null;
+
+		/**
+		 * @var string The email address of the transporter
+		 */
 		public $email = null;
+
+		/**
+		 * @var string The physical address of the transporter
+		 */
 		public $address = null;
+
+		/**
+		 * @var string The rate of the transporter
+		 */
 		public $rate = null;
+
+		/**
+		 * @var string When the transporter is to be / was registered
+		 */
 		public $created = null;
+
+		/**
+		 * @var string When the transporter is to be / was updated
+		 */
 		public $updated = null;
 		
+		
+		/**
+		 * Sets the object's properties using the values in the supplied array
+		 *
+		 * @param assoc The property values
+		 */
+
 		public function __construct( $data=array() ) 
 		{
 			if ( isset( $data['transporterid'] ) ) $this->transporterid = (int) $data['transporterid'];
@@ -22,6 +66,13 @@
 			if ( isset( $data['created'] ) ) $this->created = (int) $data['created'];
 			if ( isset( $data['updated'] ) ) $this->updated = (int) $data['updated'];
 		}
+
+
+		/**
+		 * Sets the object's properties using the edit form post values in the supplied array
+		 *
+		 * @param assoc The form post values
+		 */
 
 		public function storeFormValues ( $params ) 
 		{
@@ -37,6 +88,12 @@
 			}
 		}
 
+		/**
+		 * signin a transporter
+		 * @param string handle
+		 * @param string password
+		 */
+
 		public static function getById( $transporterid ) 
 		{
 			$conn = new PDO( DB_DSN, DB_USER, DB_PASS );
@@ -48,6 +105,14 @@
 			$conn = null;
 			if ( $row ) return new transporter( $row );
 		}
+
+
+		/**
+		 * Returns all (or a range of) transporter objects in the DB
+		 *
+		 * @param int Optional The number of rows to return (default=all)
+		 * @return Array|false A two-element array : results => array, a list of transporter objects; totalRows => Total number of articles
+		 */
 
 		public static function getList($free = true) 
 		{
@@ -73,6 +138,10 @@
 			return $list;
 		}
 
+		/**
+		 * Inserts the current transporter object into the database, and sets its ID property.
+		 */
+
 		public function insert() 
 		{
 			if ( !is_null( $this->transporterid ) ) trigger_error ( "transporter::insert(): Attempt to insert an transporter object that already has its ID property set (to $this->transporterid).", E_USER_ERROR );
@@ -92,6 +161,10 @@
 			return $this->transporterid;
 		}
 
+		/**
+		* Updates the current transporter object in the database.
+		*/
+
 		public function update() 
 		{
 			if ( is_null( $this->transporterid ) ) trigger_error ( "transporter::update(): Attempt to update an transporter object that does not have its ID property set.", E_USER_ERROR );
@@ -109,6 +182,10 @@
 			$st->execute();
 			$conn = null;
 		}
+
+		/**
+		* Deletes the current transporter object from the database.
+		*/
 
 		public function delete() 
 		{
