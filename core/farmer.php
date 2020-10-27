@@ -1,18 +1,74 @@
 <?php
 
+	/**
+	 * Class to handle farmer
+	 */
+
 	class farmer
-	{ 
+	{
+		// Properties
+
+		/**
+		 * @var int The farmer ID from the database
+		 */
 		public $farmerid = null;
+
+		/**
+		 * @var string The firstname of the farmer
+		 */
 		public $firstname = null;
+
+		/**
+		 * @var string The lastname of the farmer
+		 */
 		public $lastname = null;
+
+		/**
+		 * @var string The handle or username of the farmer
+		 */
 		public $handle = null;
+
+		/**
+		 * @var string The email address of the farmer
+		 */
 		public $email = null;
+
+		/**
+		 * @var string The mobile number of the farmer
+		 */
 		public $mobile = null;
+
+		/**
+		 * @var string The sex of the farmer
+		 */
 		public $sex = null;
+
+		/**
+		 * @var string The address of the farmer
+		 */
 		public $address = null;
+
+		/**
+		 * @var string The password of the farmer
+		 */
 		public $password = null;
+
+		/**
+		 * @var int When the farmer is to be / was first registered
+		 */
 		public $created = null;
+
+		/**
+		 * @var string When the farmer is to be / was updated
+		 */
 		public $updated = null;
+
+
+		/**
+		 * Sets the object's properties using the values in the supplied array
+		 *
+		 * @param assoc The property values
+		 */
 
 		public function __construct( $data=array() ) 
 		{
@@ -29,10 +85,18 @@
 			if ( isset( $data['updated'] ) ) $this->updated = (int) $data['updated'];
 		}
 
+		/**
+		 * Sets the object's properties using the edit form post values in the supplied array
+		 *
+		 * @param assoc The form post values
+		 */
+
 		public function storeFormValues ( $params ) 
 		{
+			// Store all the parameters
 			$this->__construct( $params );
 
+      		// Parse and store the publication date
 			if ( isset($params['created']) ) {
 				$created = explode ( '-', $params['created'] );
 
@@ -42,6 +106,14 @@
 				}
 			}
 		}
+
+
+		/**
+		 * Returns a farmer object matching the given farmer ID
+		 *
+		 * @param int The farmer ID
+		 * @return farmer|false The farmer object, or false if the record was not found or there was a problem
+		 */
 
 		public static function getById( $farmerid ) 
 		{
@@ -54,6 +126,12 @@
 			$conn = null;
 			if ( $row ) return new farmer( $row );
 		}
+
+		/**
+		 * signin a farmer
+		 * @param string handle
+		 * @param string password
+		 */
 
 		public static function signinuser( $handle, $password ) 
 		{
@@ -73,6 +151,14 @@
 			}	else return false;
 		}
 
+
+		/**
+		 * Returns all (or a range of) farmer objects in the DB
+		 *
+		 * @param int Optional The number of rows to return (default=all)
+		 * @return Array|false A two-element array : results => array, a list of farmer objects; totalRows => Total number of articles
+		 */
+
 		public static function getList() 
 		{
 			$conn = new PDO( DB_DSN, DB_USER, DB_PASS );
@@ -90,6 +176,10 @@
 			$conn = null;
 			return $list;
 		}
+
+		/**
+		 * Inserts the current farmer object into the database, and sets its ID property.
+		 */
 
 		public function insert() 
 		{
@@ -113,6 +203,10 @@
 			return $this->farmerid;
 		}
 
+		/**
+		* Updates the current farmer object in the database.
+		*/
+
 		public function update() 
 		{
 			if ( is_null( $this->farmerid ) ) trigger_error ( "farmer::update(): Attempt to update an farmer object that does not have its ID property set.", E_USER_ERROR );
@@ -132,6 +226,10 @@
 			$st->execute();
 			$conn = null;
 		}
+
+		/**
+		* Deletes the current farmer object from the database.
+		*/
 
 		public function delete() 
 		{

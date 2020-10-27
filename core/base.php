@@ -1,4 +1,9 @@
 <?php
+	/**
+	 * create a single table
+	 * @param $table
+	 * @param $variables (array)
+	 */
 	function tableCreate( $table,  $variables = array() ) 
 	{
 		try {
@@ -20,10 +25,14 @@
 		$conn = null;
 	}
 	
+	/**
+	 * Creating all the tables
+	 */
 	function createTables()
 	{
+		//Creating a payments table
 		tableCreate( 'payments',  
-			array(//famerid, amount, title, created, updated
+			array(
 				'paymentid int(11) NOT NULL AUTO_INCREMENT',
 				'famerid int(11) DEFAULT 0',
 				'amount int(11) DEFAULT 0',
@@ -34,6 +43,7 @@
 			)
 		); 
 		
+		//Creating a options table
 		tableCreate( 'options',
 			array(
 				'optionid int(11) NOT NULL AUTO_INCREMENT',
@@ -45,8 +55,9 @@
 			)
 		); 
 		
+		//Creating a farmers table
 		tableCreate( 'farmers',  
-			array(//firstname, lastname, handle, email, mobile, address, sex, password, created, updated
+			array(
 				'farmerid int(11) NOT NULL AUTO_INCREMENT',
 				'firstname varchar(50) NOT NULL',
 				'lastname varchar(50) NOT NULL',
@@ -63,6 +74,7 @@
 			)
 		);
 		
+		//Creating a managers table
 		tableCreate( 'managers', 
 			array(
 				'managerid int(11) NOT NULL AUTO_INCREMENT',
@@ -82,8 +94,10 @@
 		);
 		
 	}
-	createTables();
 	
+	/**
+	 * check if a particular table exists
+	 */
 	function checkTables( $table ) 
 	{
 		$conn = new PDO( DB_DSN, DB_USER, DB_PASS );
@@ -95,3 +109,5 @@
 		if ( $row ) return 0;
 		else return 1;
 	}
+	
+	createTables();

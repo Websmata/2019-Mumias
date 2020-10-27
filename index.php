@@ -2,6 +2,8 @@
 
 	require( "config.php" );
 	session_start();
+
+	//Find the requested page
 	$open = isset( $_GET['open'] ) ? $_GET['open'] : "";
 
 	$content = array();

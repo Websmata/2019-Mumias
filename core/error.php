@@ -16,10 +16,10 @@
 				
 		$filename = "config.php";
 		$lines = file($filename, FILE_IGNORE_NEW_LINES );
-		$lines[5] = '	define( "DB_DSN", "mysql:host=localhost;dbname='.$database.'" );';
-		$lines[6] = '	define( "DB_USER", "'.$username.'" );';
-		$lines[7] = '	define( "DB_PASS", "'.$password.'"  );';
-		$lines[12] = '	define( "SITENAME", "'.$sitename.'"  );';
+		$lines[6] = 'define( "DB_DSN", "mysql:host=localhost;dbname='.$database.'" );';
+		$lines[9] = 'define( "DB_USER", "'.$username.'" );';
+		$lines[12] = 'define( "DB_PASS", "'.$password.'"  );';
+		$lines[27] = 'define( "SITENAME", "'.$sitename.'"  );';
 		file_put_contents($filename, implode("\n", $lines));
 		header("location: ".SITEURL);
 	}

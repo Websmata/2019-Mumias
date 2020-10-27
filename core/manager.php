@@ -1,18 +1,74 @@
 <?php
 
+	/**
+	 * Class to handle manager
+	 */
+
 	class manager
-	{
+	{		
+		// Properties
+
+		/**
+		 * @var int The manager ID from the database
+		 */
 		public $managerid = null;
+
+		/**
+		 * @var string The handle of the manager
+		 */
 		public $handle = null;
+
+		/**
+		 * @var string The firstname of the manager
+		 */
 		public $firstname = null;
+
+		/**
+		 * @var string The lastname of the manager
+		 */
 		public $lastname = null;
+
+		/**
+		 * @var string The mobile number of the manager
+		 */
 		public $mobile = null;
+
+		/**
+		 * @var string The sex of the manager
+		 */
 		public $sex = null;
+
+		/**
+		 * @var string The password of the manager
+		 */
 		public $password = null;
+
+		/**
+		 * @var string The email of the manager
+		 */
 		public $email = null;
+
+		/**
+		 * @var string The level of the manager
+		 */
 		public $level = null;
+
+		/**
+		 * @var string When the manager is to be / was registered
+		 */
 		public $joined = null;
+
+		/**
+		 * @var string When the manager is to be / was updated
+		 */
 		public $updated = null;
+
+
+		/**
+		 * Sets the object's properties using the values in the supplied array
+		 *
+		 * @param assoc The property values
+		 */
 
 		public function __construct( $data=array() ) 
 		{ 
@@ -30,10 +86,18 @@
 			if ( isset( $data['updated'] ) ) $this->updated = (int) $data['updated'];
 		}
 
+		/**
+		 * Sets the object's properties using the edit form post values in the supplied array
+		 *
+		 * @param assoc The form post values
+		 */
+
 		public function storeFormValues ( $params ) 
 		{
+			// Store all the parameters
 			$this->__construct( $params );
 
+      		// Parse and store the publication date
 			if ( isset($params['joined']) ) {
 				$joined = explode ( '-', $params['joined'] );
 
@@ -43,6 +107,13 @@
 				}
 			}
 		}
+
+		/**
+		 * Returns a manager object matching the given manager ID
+		 *
+		 * @param int The manager ID
+		 * @return manager|false The manager object, or false if the record was not found or there was a problem
+		 */
 
 		public static function getById( $managerid ) 
 		{
@@ -55,6 +126,12 @@
 			$conn = null;
 			if ( $row ) return new manager( $row );
 		}
+
+		/**
+		 * signin a manager
+		 * @param string handle
+		 * @param string password
+		 */
 
 		public static function signinuser( $handle, $password ) 
 		{
@@ -75,6 +152,14 @@
 			}	else return false;
 		}
 
+
+		/**
+		 * Returns all (or a range of) manager objects in the DB
+		 *
+		 * @param int Optional The number of rows to return (default=all)
+		 * @return Array|false A two-element array : results => array, a list of manager objects; totalRows => Total number of articles
+		 */
+
 		public static function getList( $level ) 
 		{
 			$conn = new PDO( DB_DSN, DB_USER, DB_PASS );
@@ -93,6 +178,10 @@
 			$conn = null;
 			return $list;
 		}
+
+		/**
+		 * Inserts the current manager object into the database, and sets its ID property.
+		 */
 
 		public function insert() 
 		{
@@ -116,6 +205,10 @@
 			return $this->managerid;
 		}
 
+		/**
+		* Updates the current manager object in the database.
+		*/
+
 		public function update() 
 		{
 			if ( is_null( $this->managerid ) ) trigger_error ( "manager::update(): Attempt to update an manager object that does not have its ID property set.", E_USER_ERROR );
@@ -135,6 +228,10 @@
 			$st->execute();
 			$conn = null;
 		}
+
+		/**
+		* Deletes the current manager object from the database.
+		*/
 
 		public function delete() 
 		{
